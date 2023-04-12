@@ -1,0 +1,160 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "message",
+    "dateExported": "2023-04-12T13:42:06.361Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "739c918f-6ab3-4fcd-b542-6cc8e8bcb048",
+            "name": "users",
+            "containerId": "",
+            "created": "2023-04-12T12:13:13.889Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "55a18de5-6106-4fc3-b533-6dc8c7f9b479",
+            "name": "channels",
+            "containerId": "",
+            "created": "2023-04-12T12:13:27.857Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "260749c8-ccc8-46b7-84b1-44066eafaf2a",
+            "name": "messages",
+            "containerId": "",
+            "created": "2023-04-12T12:13:40.814Z",
+            "sortNum": 30000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "576b4e81-e7ea-4bbd-80d0-a8e606862d84",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "739c918f-6ab3-4fcd-b542-6cc8e8bcb048",
+            "name": "Create user",
+            "url": "{{host}}/users",
+            "method": "POST",
+            "sortNum": 10000,
+            "created": "2023-04-12T12:11:58.869Z",
+            "modified": "2023-04-12T13:40:22.616Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"name\": \"Meu user 3\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3ee16e49-234c-444c-90d6-0783fe939fa1",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "739c918f-6ab3-4fcd-b542-6cc8e8bcb048",
+            "name": "Get all users",
+            "url": "{{host}}/users",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-04-12T12:04:48.118Z",
+            "modified": "2023-04-12T12:13:18.849Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "e2d1a9f6-dcc8-4dd9-986c-6e49ca09fae5",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "739c918f-6ab3-4fcd-b542-6cc8e8bcb048",
+            "name": "Get User",
+            "url": "{{host}}/users/{id}",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-04-12T12:02:51.971Z",
+            "modified": "2023-04-12T12:13:19.904Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "1",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "69f2f829-775b-477c-9e57-0c82f6b8450c",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "55a18de5-6106-4fc3-b533-6dc8c7f9b479",
+            "name": "Create channel",
+            "url": "{{host}}/channels",
+            "method": "POST",
+            "sortNum": 40000,
+            "created": "2023-04-12T12:36:40.654Z",
+            "modified": "2023-04-12T12:58:57.676Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"hash\": \"primeiro-canal\",\n  \"users\": [1, 3]\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "3a67a494-c772-405b-ad56-92dbed184608",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "55a18de5-6106-4fc3-b533-6dc8c7f9b479",
+            "name": "Add user",
+            "url": "{{host}}/channels/{id}/users",
+            "method": "PATCH",
+            "sortNum": 50000,
+            "created": "2023-04-12T13:23:02.925Z",
+            "modified": "2023-04-12T13:31:55.301Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "4",
+                    "isPath": true
+                }
+            ],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"userId\": 2\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "5accbd13-60eb-479d-af22-8069f22f0a83",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "55a18de5-6106-4fc3-b533-6dc8c7f9b479",
+            "name": "Get channel",
+            "url": "{{host}}/channels/{id}",
+            "method": "GET",
+            "sortNum": 60000,
+            "created": "2023-04-12T13:37:58.112Z",
+            "modified": "2023-04-12T13:38:12.332Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "id",
+                    "value": "4",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "9b940fea-ee01-4dfa-8e1f-d73a43af3ac1",
+            "colId": "5545b49e-a2f0-45f2-9f85-3a4b5d96ed49",
+            "containerId": "55a18de5-6106-4fc3-b533-6dc8c7f9b479",
+            "name": "Get channel users",
+            "url": "",
+            "method": "GET",
+            "sortNum": 70000,
+            "created": "2023-04-12T13:41:16.748Z",
+            "modified": "2023-04-12T13:41:16.748Z",
+            "headers": []
+        }
+    ]
+}

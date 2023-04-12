@@ -1,27 +1,41 @@
 package org.acme.hiber.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor
+@Getter @Setter
 public class Channel extends PanacheEntity {
     private String hash;
 
-    @ManyToMany(mappedBy = "channels")
-    private Set<User> users = new HashSet<>();
+    @JsonManagedReference
+    @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
+    private Set<User> users;
 
-    @OneToMany(orphanRemoval = true, mappedBy = "channel")
-    private List<Message> messages = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Message> messages;
+
+    public Channel() {
+        users = new HashSet<>();
+        messages = new ArrayList<>();
+    }
+
+    public void addUser(User user) {
+        users.add(user);
+    }
+
+    public void addMessage(Message message) {
+        messages.add(message);
+    }
 }
