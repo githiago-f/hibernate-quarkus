@@ -2,11 +2,7 @@ package org.acme.hiber.model;
 
 import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,12 +19,13 @@ public class Channel extends PanacheEntity {
     @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
     private Set<User> users;
 
+    @JoinColumn(name = "channel_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Message> messages;
+    private Set<Message> messages;
 
     public Channel() {
-        users = new HashSet<>();
-        messages = new ArrayList<>();
+        users = new LinkedHashSet<>();
+        messages = new LinkedHashSet<>();
     }
 
     public void addUser(User user) {
@@ -38,4 +35,23 @@ public class Channel extends PanacheEntity {
     public void addMessage(Message message) {
         messages.add(message);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hash);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Channel other = (Channel) obj;
+        return Objects.equals(hash, other.hash);
+    }
+
+    
 }

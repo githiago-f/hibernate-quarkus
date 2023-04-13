@@ -13,7 +13,7 @@ import org.acme.hiber.model.User;
 @Path("/users")
 public class UserRouter {
     @Inject
-    private UserController userController;
+    UserController userController;
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)

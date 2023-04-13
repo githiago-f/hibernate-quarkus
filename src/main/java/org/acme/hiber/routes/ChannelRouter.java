@@ -12,7 +12,7 @@ import org.acme.hiber.model.Channel;
 @Path("/channels")
 public class ChannelRouter {
     @Inject
-    private ChannelController channelController;
+    ChannelController channelController;
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

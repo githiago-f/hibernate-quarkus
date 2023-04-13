@@ -1,8 +1,5 @@
 package org.acme.hiber.controller;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import javax.inject.Singleton;
 import javax.transaction.Transactional;
 
@@ -22,13 +19,17 @@ public class ChannelController {
         Channel channel = new Channel();
         channel.setHash(channelDTO.getHash());
         log.info("Channel have {} initial users", channelDTO.getUsers().size());
-        Set<User> users = channelDTO.getUsers().stream()
-            .map(userId -> (User) User.findById(userId))
-            .collect(Collectors.toSet());
-        users.forEach(user -> log.info("User: {}", user.getName()));
-        channel.setUsers(users);
         channel.persist();
-        log.info("Channel persisted");
+        channelDTO.getUsers().stream()
+            .map(userId -> (User) User.findById(userId))
+            .forEach(user -> {
+                user.addChannel(channel);
+                user.persist();
+                // only to generate a good response with the 
+                // set of users populated.
+                channel.addUser(user);
+            });
+        log.info("Channel persisted and added to user's channels list");
         return channel;
     }
 
@@ -41,9 +42,11 @@ public class ChannelController {
         Channel channel = getChannel(updateChannelUsersDTO.getChannelId());
         log.info("Updating channel {}", channel.getHash());
         User user = User.findById(updateChannelUsersDTO.getUserId());
+        log.info("User added: {}", user.id);
+        user.addChannel(channel);
+        user.persist();
+        log.info("Channel added to user's channel list");
         channel.addUser(user);
-        channel.persist();
-        log.info("Channel persisted");
         return channel;
     }
 }

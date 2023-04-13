@@ -1,34 +1,32 @@
 package org.acme.hiber.model;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Getter @Setter @NoArgsConstructor 
+@Getter @Setter 
 public class User extends PanacheEntity {
     private String name;
 
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Channel> channels = new HashSet<>();
+    private Set<Channel> channels;
 
+    @JoinColumn(name = "user_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Message> messages = new ArrayList<>();
+    private List<Message> messages;
+
+    public User() {
+        channels = new LinkedHashSet<>();
+        messages = new ArrayList<>();
+    }
 
     @Override
     public String toString() {
@@ -38,4 +36,27 @@ public class User extends PanacheEntity {
     public void addMessage(Message message) {
         messages.add(message);
     }
+    
+    public void addChannel(Channel channel) {
+        channels.add(channel);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, channels, messages);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        return Objects.equals(name, other.name) && Objects.equals(channels, other.channels)
+                && Objects.equals(messages, other.messages);
+    }
+
 }
