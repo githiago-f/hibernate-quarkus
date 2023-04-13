@@ -17,11 +17,11 @@ public class Channel extends PanacheEntity {
 
     @JsonManagedReference
     @ManyToMany(mappedBy = "channels", fetch = FetchType.EAGER)
-    private Set<User> users;
+    private final Set<User> users;
 
     @JoinColumn(name = "channel_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Set<Message> messages;
+    private final Set<Message> messages;
 
     public Channel() {
         users = new LinkedHashSet<>();
@@ -34,6 +34,20 @@ public class Channel extends PanacheEntity {
 
     public void addMessage(Message message) {
         messages.add(message);
+    }
+
+    /**
+     * Do not modify this list, use addMessage method.
+     */
+    public Set<Message> getMessages() {
+        return Collections.unmodifiableSet(messages);
+    }
+
+    /**
+     * Do not modify this list, use addUser method.
+     */
+    public Set<User> getUsers() {
+        return Collections.unmodifiableSet(users);
     }
 
     @Override

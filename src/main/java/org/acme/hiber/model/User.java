@@ -17,11 +17,11 @@ public class User extends PanacheEntity {
 
     @JsonBackReference
     @ManyToMany(cascade = CascadeType.ALL)
-    private Set<Channel> channels;
+    private final Set<Channel> channels;
 
     @JoinColumn(name = "user_id")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Message> messages;
+    private final List<Message> messages;
 
     public User() {
         channels = new LinkedHashSet<>();
@@ -33,11 +33,11 @@ public class User extends PanacheEntity {
         return "(name=" + name + ", id=" + id + ")";
     }
 
-    public void addMessage(Message message) {
+    public void addMessage(final Message message) {
         messages.add(message);
     }
     
-    public void addChannel(Channel channel) {
+    public void addChannel(final Channel channel) {
         channels.add(channel);
     }
     
@@ -47,16 +47,15 @@ public class User extends PanacheEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(final Object obj) {
         if (this == obj)
             return true;
         if (obj == null)
             return false;
         if (getClass() != obj.getClass())
             return false;
-        User other = (User) obj;
+        final User other = (User) obj;
         return Objects.equals(name, other.name) && Objects.equals(channels, other.channels)
                 && Objects.equals(messages, other.messages);
     }
-
 }
